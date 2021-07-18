@@ -1,14 +1,19 @@
 
 import { React, Component } from 'react';
-class AddContact extends Component{
+class EditContact extends Component{
     //this is  state object with empty  variables
-    state={
-        name:'',
-        email:'',
-    };
+    constructor(props){
+        super(props);
+        const { id, name,email} = props.location.state.contact;
+        this.state ={
+            id,
+            name,
+            email
+        };
+    }
 
     //taking e as an event and preventing for not being refreshed 
-    add= (e)=>{
+    update= (e)=>{
         e.preventDefault();
         //if two variable empty returns alert with that message
         if(this.state.name === '' && this.state.email === ''){
@@ -18,7 +23,7 @@ class AddContact extends Component{
         else{
             //if not empty those two variables(name, email) taking this addContactHandler from app.js through props and 
             //sending back to the app component with the state variable  data
-            this.props.addContactHandler(this.state);
+            this.props.updateContactHandler(this.state);
             // After sending back the state to the app.js we dont want those data to be stored in our input fields
             //so make it empty
             this.setState({name:'',email:''});
@@ -29,9 +34,9 @@ class AddContact extends Component{
     render(){
         return(
             <div className="ui main">
-                <h2>Add Contact</h2>
+                <h2>Edit Contact</h2>
                 {/* add onSubmit start when click the submit button and takes to the add function */}
-                <form className="ui form" onSubmit={this.add}>
+                <form className="ui form" onSubmit={this.update}>
                     <div className="field">
                         <label>Name</label>
                         <input 
@@ -53,9 +58,9 @@ class AddContact extends Component{
                         onChange={(e)=> this.setState({email: e.target.value})}
                         placeholder="email"/>
                     </div>
-                    <button className="ui button blue">button</button>
+                    <button className="ui button blue">Update</button>
                 </form>
             </div>
         )}
 }
-export default AddContact;
+export default EditContact;
